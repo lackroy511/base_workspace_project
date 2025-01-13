@@ -1,0 +1,14 @@
+services:
+  base_workspace_project:
+    container_name: base_workspace_project
+    build:
+      context: ..
+      dockerfile: .docker/dockerfile
+    ports:
+      - "4200:4200"
+    command: python3 app/main.py
+    volumes:
+      - ..:/root/base_workspace_project
+    env_file:
+      - ../.env
+    restart: unless-stopped

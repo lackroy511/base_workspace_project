@@ -1,0 +1,11 @@
+FROM python:3.12.7-slim
+
+USER root
+
+WORKDIR /root/base_workspace_project
+COPY .. .
+
+ENV PYTHONPATH="${PYTHONPATH}:/root/base_workspace_project"
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements/prod.txt
