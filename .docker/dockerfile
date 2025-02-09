@@ -1,11 +1,14 @@
 FROM python:3.12.7-slim
 
-USER root
+WORKDIR /app
+RUN useradd --create-home appuser
 
-WORKDIR /root/base_workspace_project
+ENV PYTHONPATH="${PYTHONPATH}:/app/app"
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+COPY ../requirements/prod.txt ./requirements/prod.txt
+RUN pip install --no-cache-dir -r ../requirements/prod.txt
+
 COPY .. .
 
-ENV PYTHONPATH="${PYTHONPATH}:/root/base_workspace_project"
-
-RUN pip install --upgrade pip
-RUN pip install -r requirements/prod.txt
+USER appuser
